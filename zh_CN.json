@@ -1,0 +1,23 @@
+{
+	"Name" : "加密货币行情",
+	"Description": "获取最新的比特币和以太坊价格。", 
+	"Actions" :
+	[
+		{
+			"Name": "加密货币行情",
+			"Tooltip": "获取最新的比特币和以太坊价格。"
+		}
+	],
+  "Localization": {
+      "Cryptocurrencies to Display": "显示的加密货币",
+      "Refresh Frequency":"刷新频率",
+      "10s":"10秒",
+      "30s":"30秒",
+      "1min":"1分钟",
+      "5min":"5分钟",
+      "10min":"10分钟",
+      "15min":"15分钟",
+      "30min":"30分钟",
+      "1h":"1小时"
+  }
+}

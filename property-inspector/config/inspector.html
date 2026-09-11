@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta
+			name="viewport"
+			content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui,viewport-fit=cover"
+		/>
+  <title>action</title>
+  <link rel="stylesheet" href="../../libs/css/udpi.css">
+</head>
+<body>
+  <div class="udpi-wrapper hidden">
+
+    <form id="property-inspector">
+
+      <div class="udpi-item">
+        <div class="udpi-item-label" data-localize>Cryptocurrencies to Display</div>
+        <div class="udpi-item-value">
+          <div class="udpi-item-child" style="margin-top: 0;">
+            <input id="showBTC" name="showBTC" type="checkbox" checked>
+            <label for="showBTC" class="sdpi-item-label"><span></span>Show Bitcoin (BTC)</label>
+          </div>
+          <div class="udpi-item-child">
+            <input id="showETH" name="showETH" type="checkbox">
+            <label for="showETH" class="sdpi-item-label"><span></span>Show Ethereum (ETH)</label>
+          </div>
+        </div>
+      </div>
+
+      <div type="select" class="udpi-item">
+        <div class="udpi-item-label" data-localize>Refresh Frequency</div>
+        <select class="udpi-item-value select" id="refreshDuration"  name="refreshDuration">
+          <option value="10" data-localize>10s</option>
+          <option value="30" data-localize>30s</option>
+          <option value="60" data-localize selected>1min</option>
+          <option value="300" data-localize>5min</option>
+          <option value="600" data-localize>10min</option>
+          <option value="900" data-localize>15min</option>
+          <option value="1800" data-localize>30min</option>
+          <option value="3600" data-localize>1h</option>
+        </select>
+      </div>
+
+    </form>
+
+  </div>
+
+  <script src="../../libs/js/constants.js"></script>
+  <script src="../../libs/js/eventEmitter.js"></script>
+  <script src="../../libs/js/timers.js"></script>
+  <script src="../../libs/js/utils.js"></script>
+  <script src="../../libs/js/ulanzideckApi.js"></script>
+
+
+
+  <script src="./inspector.js"></script>
+  
+</body>
+</html>
