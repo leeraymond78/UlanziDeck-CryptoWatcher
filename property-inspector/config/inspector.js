@@ -41,6 +41,12 @@ $UD.onParamFromApp( jsonObj => {
 
 })
 
+const CRYPTO_KEYS = ['showBTC', 'showETH', 'showBNB', 'showXRP', 'showSOL', 'showTRX']
+
+function asBool(value) {
+  return value === true || value === 'on' || value === 'true'
+}
+
 //重载表单数据
 function settingSaveParam(params) {
   // console.log('===setSetting', params)
@@ -48,5 +54,9 @@ function settingSaveParam(params) {
 
   //渲染表单数据
   Utils.setFormValue(ACTION_SETTING, form);
+  CRYPTO_KEYS.forEach((key) => {
+    const el = document.getElementById(key)
+    if (el) el.checked = asBool(ACTION_SETTING[key])
+  })
 
 }

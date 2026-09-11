@@ -14,18 +14,46 @@
 
     <form id="property-inspector">
 
+      <div type="select" class="udpi-item">
+        <div class="udpi-item-label" data-localize>Cryptos to Show</div>
+        <select class="udpi-item-value select" id="showCount" name="showCount">
+          <option value="1" data-localize selected>1 crypto</option>
+          <option value="2" data-localize>2 cryptos</option>
+        </select>
+      </div>
+
       <div class="udpi-item">
-        <div class="udpi-item-label" data-localize>Cryptocurrencies to Display</div>
+        <div class="udpi-item-label" data-localize>Cryptocurrencies</div>
         <div class="udpi-item-value">
           <div class="udpi-item-child" style="margin-top: 0;">
             <input id="showBTC" name="showBTC" type="checkbox" checked>
-            <label for="showBTC" class="sdpi-item-label"><span></span>Show Bitcoin (BTC)</label>
+            <label for="showBTC" class="sdpi-item-label"><span></span>BTC</label>
           </div>
           <div class="udpi-item-child">
             <input id="showETH" name="showETH" type="checkbox">
-            <label for="showETH" class="sdpi-item-label"><span></span>Show Ethereum (ETH)</label>
+            <label for="showETH" class="sdpi-item-label"><span></span>ETH</label>
+          </div>
+          <div class="udpi-item-child">
+            <input id="showBNB" name="showBNB" type="checkbox">
+            <label for="showBNB" class="sdpi-item-label"><span></span>BNB</label>
+          </div>
+          <div class="udpi-item-child">
+            <input id="showXRP" name="showXRP" type="checkbox">
+            <label for="showXRP" class="sdpi-item-label"><span></span>XRP</label>
+          </div>
+          <div class="udpi-item-child">
+            <input id="showSOL" name="showSOL" type="checkbox">
+            <label for="showSOL" class="sdpi-item-label"><span></span>SOL</label>
+          </div>
+          <div class="udpi-item-child">
+            <input id="showTRX" name="showTRX" type="checkbox">
+            <label for="showTRX" class="sdpi-item-label"><span></span>TRX</label>
           </div>
         </div>
+      </div>
+
+      <div class="udpi-item">
+        <div class="udpi-item-hint" data-localize>If more coins are enabled than shown, the first 1 or 2 in this list are used.</div>
       </div>
 
       <div type="select" class="udpi-item">

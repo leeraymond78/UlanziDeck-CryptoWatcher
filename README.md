@@ -1,16 +1,23 @@
 # Crypto Watcher for UlanziDeck
 
 <p align="center">
-  <img src="assets/demo.png" alt="Crypto Watcher key showing Bitcoin and Ethereum prices" width="240">
+  <img src="assets/demo.png" alt="Crypto Watcher key showing 仮想通貨 BTC and ETH" width="240">
 </p>
 
-Shows live [Bitcoin](https://coinmarketcap.com/currencies/bitcoin/) and [Ethereum](https://coinmarketcap.com/currencies/ethereum/) prices on an [UlanziDeck](https://www.ulanzi.com/) key.
+Shows live crypto prices on an [UlanziDeck](https://www.ulanzi.com/) key. Supported coins: **BTC, ETH, BNB, XRP, SOL, TRX**.
 
 Prices and 24h change come from [CoinMarketCap](https://coinmarketcap.com/). The key uses a dark ticker layout:
 
-- **Top:** symbol (or `ビットコイン` when BTC and ETH are both on)
+**1 crypto**
+
+- **Top:** `仮想通貨` plus the symbol (`仮想通貨 BTC`)
 - **Middle:** price
 - **Bottom:** 24h change percent (green up, red down — no `+` / `-`)
+
+**2 cryptos**
+
+- First coin uses the same full layout (`仮想通貨 BTC`, price, change)
+- Second coin is compact at the bottom right: `ETH 2,464` on one row, change under it
 
 Tap the key to refresh immediately.
 
@@ -30,8 +37,8 @@ Default plugin path on macOS:
 
 ### Settings
 
-- Show Bitcoin (BTC)
-- Show Ethereum (ETH)
-- Refresh interval (default 1 minute)
+- **Cryptos to show:** 1 or 2
+- **Cryptocurrencies:** enable/disable BTC, ETH, BNB, XRP, SOL, TRX
+- **Refresh interval** (default 1 minute)
 
-You can show BTC only, ETH only, or both on one key.
+If more coins are enabled than the display count, the key uses the first 1 or 2 in that list order.

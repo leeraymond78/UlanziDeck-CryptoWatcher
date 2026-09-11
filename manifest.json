@@ -2,7 +2,7 @@
     "Version": "1.0.0",
     "Author": "RayKira",
     "Name": "Crypto Watcher",
-    "Description": "Watch live BTC and ETH prices from CoinMarketCap.",
+    "Description": "Watch live BTC, ETH, BNB, XRP, SOL, and TRX prices from CoinMarketCap.",
     "Icon": "assets/icons/icon.png",
     "Category": "Crypto Watcher",
     "CategoryIcon": "assets/icons/categoryIcon.png",
@@ -22,7 +22,7 @@
             "Image": "assets/icons/actionDefaultImage.png"
           }
         ],
-        "Tooltip": "Watch live BTC and ETH prices.",
+        "Tooltip": "Watch live BTC, ETH, BNB, XRP, SOL, and TRX prices.",
         "UUID": "com.ulanzi.ulanzideck.btcticker.config",
         "SupportedInMultiActions": false
       }

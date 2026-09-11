@@ -1,5 +1,48 @@
+const COINS = [
+    { key: 'showBTC', symbol: 'BTC', id: 1 },
+    { key: 'showETH', symbol: 'ETH', id: 1027 },
+    { key: 'showBNB', symbol: 'BNB', id: 1839 },
+    { key: 'showXRP', symbol: 'XRP', id: 52 },
+    { key: 'showSOL', symbol: 'SOL', id: 5426 },
+    { key: 'showTRX', symbol: 'TRX', id: 1958 }
+]
+
+function asBool(value) {
+    return value === true || value === 'on' || value === 'true'
+}
+
 function formatChangePercent(change) {
     return `${Math.abs(Number(change) || 0).toFixed(2)}%`
+}
+
+function formatPrice(value) {
+    const amount = Number(value) || 0
+    const abs = Math.abs(amount)
+    if (abs >= 100) return Math.round(amount).toLocaleString('en-US')
+    if (abs >= 1) return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    return amount.toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })
+}
+
+function cryptoTitle(symbol) {
+    return `仮想通貨 ${symbol}`
+}
+
+function changeColor(change) {
+    return change > 0 ? '#3f9c24' : '#c62e1a'
+}
+
+function enabledCoins(settings) {
+    return COINS.filter((coin) => asBool(settings[coin.key]))
+}
+
+function displayLimit(settings) {
+    const count = Number(settings.showCount)
+    if (count === 1 || count === 2) return count
+    return Math.min(2, Math.max(1, enabledCoins(settings).length))
+}
+
+function coinsToShow(settings) {
+    return enabledCoins(settings).slice(0, displayLimit(settings))
 }
 
 class BTCTicker {
@@ -10,8 +53,13 @@ class BTCTicker {
         this.HORIZONTAL_COMPRESS = 0.7
 
         this.settings = {
+            showCount: 1,
             showBTC: true,
             showETH: false,
+            showBNB: false,
+            showXRP: false,
+            showSOL: false,
+            showTRX: false,
             refreshDuration: 60
         }
         this.allowSend = true
@@ -43,40 +91,25 @@ class BTCTicker {
 
             this.createIcon("Loading...", null) //loading
 
-            const { showBTC, showETH } = this.settings
-            console.log('===fetchData settings:', { showBTC, showETH })
+            const selected = coinsToShow(this.settings)
+            console.log('===fetchData settings:', this.settings, selected.map((coin) => coin.symbol))
+
+            if (selected.length === 0) {
+                this.createIcon("No crypto selected", null)
+                return
+            }
 
             try {
+                const cryptoData = await Promise.all(selected.map(async (coin) => {
+                    const result = await Utils.fetchData(`https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/lite?id=${coin.id}`)
+                    return {
+                        symbol: coin.symbol,
+                        price: result.data.statistics.price,
+                        change: result.data.statistics.priceChangePercentage24h
+                    }
+                }))
 
-                const cryptoData = []
-
-                if (showBTC) {
-                    const btcResult = await Utils.fetchData("https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/lite?id=1")
-                    const btcPrice = btcResult.data.statistics.price
-                    const btcChange = btcResult.data.statistics.priceChangePercentage24h
-                    cryptoData.push({
-                        symbol: 'BTC',
-                        price: btcPrice,
-                        change: btcChange
-                    })
-                }
-
-                if (showETH) {
-                    const ethResult = await Utils.fetchData("https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/lite?id=1027")
-                    const ethPrice = ethResult.data.statistics.price
-                    const ethChange = ethResult.data.statistics.priceChangePercentage24h
-                    cryptoData.push({
-                        symbol: 'ETH',
-                        price: ethPrice,
-                        change: ethChange
-                    })
-                }
-
-                if (cryptoData.length > 0) {
-                    this.createIcon(null, { cryptoData })
-                } else {
-                    this.createIcon("No crypto selected", null)
-                }
+                this.createIcon(null, { cryptoData })
 
             } catch (e) {
                 console.log('===fetch data error', e)
@@ -136,57 +169,57 @@ class BTCTicker {
         ctx.textBaseline = 'middle'
         ctx.textAlign = 'left'
         const leftPadding = 10
+        const fontStack = '"FOT-Matisse Pro", "MatissePro-EB", sans-serif'
         if (data && data.cryptoData && data.cryptoData.length > 0) {
             const cryptoData = data.cryptoData
             if (cryptoData.length === 1) {
                 const crypto = cryptoData[0]
-                const formattedPrice = `${parseInt(crypto.price).toLocaleString()}`
+                const formattedPrice = formatPrice(crypto.price)
                 const formattedChange = formatChangePercent(crypto.change)
                 ctx.fillStyle = "#ffffff"
                 ctx.shadowColor = "#ffffff"
                 ctx.shadowBlur = 0
-                ctx.font = `28px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
-                this.drawTextWithSpacing(ctx, crypto.symbol, leftPadding, centerY - 50, 2, 'left')
+                ctx.font = `24px ${fontStack}`
+                this.drawTextWithSpacing(ctx, cryptoTitle(crypto.symbol), leftPadding, centerY - 50, 2, 'left')
                 const fontSize = formattedPrice.length > 8 ? 48 : formattedPrice.length > 6 ? 52 : 56
-                ctx.font = `${fontSize}px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+                ctx.font = `${fontSize}px ${fontStack}`
                 this.drawTextWithSpacing(ctx, formattedPrice, leftPadding, centerY - 5, 3, 'left')
                 ctx.shadowBlur = 0
-                ctx.fillStyle = crypto.change > 0 ? "#3f9c24" : "#c62e1a"
-                ctx.shadowColor = crypto.change > 0 ? "#3f9c24" : "#c62e1a"
-                ctx.font = `28px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+                ctx.fillStyle = changeColor(crypto.change)
+                ctx.shadowColor = changeColor(crypto.change)
+                ctx.font = `28px ${fontStack}`
                 this.drawTextWithSpacing(ctx, formattedChange, leftPadding, centerY + 40, 2, 'left')
-            } else if (cryptoData.length === 2) {
-                const btc = cryptoData.find(c => c.symbol === 'BTC')
-                const eth = cryptoData.find(c => c.symbol === 'ETH')
+            } else {
+                const primary = cryptoData[0]
+                const secondary = cryptoData[1]
                 const rightPadding = canvas.width - 10
-                if (btc) {
-                    const formattedPrice = `${parseInt(btc.price).toLocaleString()}`
-                    const formattedChange = formatChangePercent(btc.change)
+                if (primary) {
+                    const formattedPrice = formatPrice(primary.price)
+                    const formattedChange = formatChangePercent(primary.change)
                     ctx.fillStyle = "#ffffff"
                     ctx.shadowColor = "#ffffff"
                     ctx.shadowBlur = 0
-                    ctx.font = `24px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
-                    this.drawTextWithSpacing(ctx, 'ビットコイン', leftPadding, 35, 2, 'left')
+                    ctx.font = `24px ${fontStack}`
+                    this.drawTextWithSpacing(ctx, cryptoTitle(primary.symbol), leftPadding, 35, 2, 'left')
                     const fontSize = formattedPrice.length > 8 ? 48 : formattedPrice.length > 6 ? 52 : 56
-                    ctx.font = `${fontSize}px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+                    ctx.font = `${fontSize}px ${fontStack}`
                     this.drawTextWithSpacing(ctx, formattedPrice, leftPadding, 80, 3, 'left')
-                    ctx.fillStyle = btc.change > 0 ? "#3f9c24" : "#c62e1a"
-                    ctx.shadowColor = btc.change > 0 ? "#3f9c24" : "#c62e1a"
-                    ctx.font = `28px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+                    ctx.fillStyle = changeColor(primary.change)
+                    ctx.shadowColor = changeColor(primary.change)
+                    ctx.font = `28px ${fontStack}`
                     this.drawTextWithSpacing(ctx, formattedChange, leftPadding, 125, 2, 'left')
                 }
-                if (eth) {
-                    const formattedPrice = `${parseInt(eth.price).toLocaleString()}`
-                    const formattedChange = formatChangePercent(eth.change)
+                if (secondary) {
+                    const formattedPrice = formatPrice(secondary.price)
+                    const formattedChange = formatChangePercent(secondary.change)
                     ctx.fillStyle = "#ffffff"
                     ctx.shadowColor = "#ffffff"
                     ctx.shadowBlur = 0
-                    ctx.font = `26px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
-                    const ethLabel = `${eth.symbol} ${formattedPrice}`
-                    this.drawTextWithSpacing(ctx, ethLabel, rightPadding, 155, 2, 'right')
-                    ctx.fillStyle = eth.change > 0 ? "#3f9c24" : "#c62e1a"
-                    ctx.shadowColor = eth.change > 0 ? "#3f9c24" : "#c62e1a"
-                    ctx.font = `22px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+                    ctx.font = `26px ${fontStack}`
+                    this.drawTextWithSpacing(ctx, `${secondary.symbol} ${formattedPrice}`, rightPadding, 155, 2, 'right')
+                    ctx.fillStyle = changeColor(secondary.change)
+                    ctx.shadowColor = changeColor(secondary.change)
+                    ctx.font = `22px ${fontStack}`
                     this.drawTextWithSpacing(ctx, formattedChange, rightPadding, 180, 2, 'right')
                 }
             }
@@ -196,7 +229,7 @@ class BTCTicker {
             ctx.shadowColor = "#ffffff"
             ctx.shadowBlur = 8
             const fontSize = text.length > 8 ? 24 : text.length > 6 ? 28 : 32
-            ctx.font = `${fontSize}px "FOT-Matisse Pro", "MatissePro-EB", sans-serif`
+            ctx.font = `${fontSize}px ${fontStack}`
             ctx.fillText(text, centerX, centerY)
         }
         const s_url = canvas.toDataURL('image/png');
@@ -222,18 +255,31 @@ class BTCTicker {
 
     setParams(jsn) {
         console.log('===setParams received:', jsn)
-        
-        // Handle checkbox values properly
-        if (jsn.showBTC !== undefined) {
-            jsn.showBTC = jsn.showBTC === true || jsn.showBTC === 'on' || jsn.showBTC === 'true'
+        const next = { ...jsn }
+
+        if (next.showCount !== undefined) {
+            const count = Number(next.showCount)
+            next.showCount = count === 2 ? 2 : 1
         }
-        if (jsn.showETH !== undefined) {
-            jsn.showETH = jsn.showETH === true || jsn.showETH === 'on' || jsn.showETH === 'true'
+
+        const fromInspector = next.showCount !== undefined || COINS.some((coin) => coin.key in jsn)
+        if (fromInspector) {
+            for (const coin of COINS) {
+                next[coin.key] = asBool(jsn[coin.key])
+            }
+        } else {
+            for (const coin of COINS) {
+                if (coin.key in next) next[coin.key] = asBool(next[coin.key])
+            }
         }
-        
+
+        if (next.refreshDuration !== undefined) {
+            next.refreshDuration = Number(next.refreshDuration)
+        }
+
         this.settings = {
             ...this.settings,
-            ...jsn
+            ...next
         }
         console.log('===updated settings:', this.settings)
 

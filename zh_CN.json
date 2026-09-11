@@ -1,15 +1,19 @@
 {
 	"Name" : "加密观察",
-	"Description": "查看最新的比特币和以太坊价格。", 
+	"Description": "查看比特币、以太坊等加密货币价格。", 
 	"Actions" :
 	[
 		{
 			"Name": "加密观察",
-			"Tooltip": "查看最新的比特币和以太坊价格。"
+			"Tooltip": "查看比特币、以太坊等加密货币价格。"
 		}
 	],
   "Localization": {
-      "Cryptocurrencies to Display": "显示的加密货币",
+      "Cryptos to Show": "显示数量",
+      "1 crypto": "1 个",
+      "2 cryptos": "2 个",
+      "Cryptocurrencies": "加密货币",
+      "If more coins are enabled than shown, the first 1 or 2 in this list are used.": "启用数量多于显示数量时，按列表顺序取前 1 或 2 个。",
       "Refresh Frequency":"刷新频率",
       "10s":"10秒",
       "30s":"30秒",
