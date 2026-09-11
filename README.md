@@ -1,5 +1,9 @@
 # Crypto Watcher for UlanziDeck
 
+<p align="center">
+  <img src="assets/demo.png" alt="Crypto Watcher key showing Bitcoin and Ethereum prices" width="240">
+</p>
+
 Shows live [Bitcoin](https://coinmarketcap.com/currencies/bitcoin/) and [Ethereum](https://coinmarketcap.com/currencies/ethereum/) prices on an [UlanziDeck](https://www.ulanzi.com/) key.
 
 Prices and 24h change come from [CoinMarketCap](https://coinmarketcap.com/). The key uses a dark ticker layout:
