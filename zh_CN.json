@@ -1,11 +1,11 @@
 {
-	"Name" : "加密货币行情",
-	"Description": "获取最新的比特币和以太坊价格。", 
+	"Name" : "加密观察",
+	"Description": "查看最新的比特币和以太坊价格。", 
 	"Actions" :
 	[
 		{
-			"Name": "加密货币行情",
-			"Tooltip": "获取最新的比特币和以太坊价格。"
+			"Name": "加密观察",
+			"Tooltip": "查看最新的比特币和以太坊价格。"
 		}
 	],
   "Localization": {

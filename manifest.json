@@ -1,10 +1,10 @@
 {
     "Version": "1.0.0",
-    "Author": "Ulanzi",
-    "Name": "Crypto Ticker",
-    "Description": "Get the latest BTC and ETH prices from CoinMarketCap.",
+    "Author": "RayKira",
+    "Name": "Crypto Watcher",
+    "Description": "Watch live BTC and ETH prices from CoinMarketCap.",
     "Icon": "assets/icons/icon.png",
-    "Category": "BTC Ticker",
+    "Category": "Crypto Watcher",
     "CategoryIcon": "assets/icons/categoryIcon.png",
     "CodePath": "plugin/app.html",
     "Type": "JavaScript",
@@ -13,7 +13,7 @@
     "UUID": "com.ulanzi.ulanzideck.btcticker",
     "Actions": [
       {
-        "Name": "Crypto Ticker",
+        "Name": "Crypto Watcher",
         "Icon": "assets/icons/icon.png",
         "PropertyInspectorPath": "property-inspector/config/inspector.html",
         "state": 0,
@@ -22,7 +22,7 @@
             "Image": "assets/icons/actionDefaultImage.png"
           }
         ],
-        "Tooltip": "Get the latest BTC and ETH prices.",
+        "Tooltip": "Watch live BTC and ETH prices.",
         "UUID": "com.ulanzi.ulanzideck.btcticker.config",
         "SupportedInMultiActions": false
       }

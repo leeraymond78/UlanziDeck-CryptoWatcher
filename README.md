@@ -1,4 +1,4 @@
-# BTC Ticker for UlanziDeck
+# Crypto Watcher for UlanziDeck
 
 Shows live [Bitcoin](https://coinmarketcap.com/currencies/bitcoin/) and [Ethereum](https://coinmarketcap.com/currencies/ethereum/) prices on an [UlanziDeck](https://www.ulanzi.com/) key.
 
@@ -16,7 +16,7 @@ For the same typeface as the Futu portfolio key, install **FOT-Matisse Pro EB** 
 
 1. Clone this repo into your UlanziDeck `Plugins` folder as `com.raykira.btcticker.ulanziPlugin`, or copy that folder there.
 2. Restart UlanziDeck.
-3. Add **Crypto Ticker** to a key.
+3. Add **Crypto Watcher** to a key.
 
 Default plugin path on macOS:
 
