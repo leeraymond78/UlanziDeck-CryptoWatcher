@@ -14,14 +14,14 @@ For the same typeface as the Futu portfolio key, install **FOT-Matisse Pro EB** 
 
 ## Install
 
-1. Clone this repo into your UlanziDeck `Plugins` folder as `com.raykira.btcticker.ulanziPlugin`, or copy that folder there.
+1. Clone this repo into your UlanziDeck `Plugins` folder as `com.raykira.cryptowatcher.ulanziPlugin`, or copy that folder there.
 2. Restart UlanziDeck.
 3. Add **Crypto Watcher** to a key.
 
 Default plugin path on macOS:
 
 ```text
-~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/com.raykira.btcticker.ulanziPlugin
+~/Library/Application Support/Ulanzi/UlanziDeck/Plugins/com.raykira.cryptowatcher.ulanziPlugin
 ```
 
 ### Settings
